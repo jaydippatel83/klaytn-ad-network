@@ -4,18 +4,19 @@ import Collection_category_filter from '../collectrions/collection_category_filt
 import CategoryItem from './categoryItem';
 import { useDispatch } from 'react-redux';
 import { updateTrendingCategoryItemData } from '../../redux/counterSlice';
+import Explore from './SubCategory';
 
 const FilterCategoryItem = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(updateTrendingCategoryItemData(trendingCategoryData.slice(0, 8)));
+		dispatch(updateTrendingCategoryItemData(trendingCategoryData.slice(0, 8))); 
 	}, []);
 
 	return (
 		<div> 
 			<Collection_category_filter />
-			<CategoryItem />
+			<Explore />
 		</div>
 	);
 };

@@ -7,7 +7,7 @@ import Recently_added_dropdown from "../dropdown/recently_added_dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTrendingCategoryItemData } from "../../redux/counterSlice";
 
-const Trending_categories_items = () => {
+const Trending_categories_items = ({id}) => {
   const [itemdata, setItemdata] = useState(trendingCategoryData);
   const dispatch = useDispatch();
   const { trendingCategorySorText } = useSelector((state) => state.counter);
@@ -104,7 +104,7 @@ const Trending_categories_items = () => {
           })}
         </ul> 
       </div> 
-      <CategoryItem />
+      <CategoryItem  propId={id}/>
     </>
   );
 };

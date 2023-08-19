@@ -7,16 +7,18 @@ import Likes from "../likes";
 import Auctions_dropdown from "../dropdown/Auctions_dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { buyModalShow } from "../../redux/counterSlice";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { KlaytnContext } from "../../context/KlaytnContext";
+import { AuthContext } from "../../context/AuthConext";
 
-const CategoryItem = () => {
+const CategoryItem = ({propId}) => {
   const { sortedtrendingCategoryItemData } = useSelector(
     (state) => state.counter
   );
   const dispatch = useDispatch();
-
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const [nftData, setNftData] = useState([]);
   const klaytnContext = useContext(KlaytnContext);
   const { rentNFTs, rentLoading } = klaytnContext;
@@ -27,7 +29,7 @@ const CategoryItem = () => {
 
   async function getNftData() {
     const arry = [];
-    const q = query(collection(db, "CreateNFTs"));
+    const q = query(collection(db, "CreateNFTs"), where(propId ,"==", user)); 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((fire) => {
       const id = fire.id;
@@ -41,7 +43,7 @@ const CategoryItem = () => {
       {nftData &&
         nftData.map((item) => {
           const { id, Photo, Nftname, Description, Creator, Price, nftId } = item;
-
+console.log(item,"itttt");
           return (
             <article key={id}>
               <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
@@ -106,7 +108,7 @@ const CategoryItem = () => {
                   </span>
 
                   {/* auction dropdown  */}
-                  {/* <Auctions_dropdown classes="dark:hover:bg-jacarta-600 dropup hover:bg-jacarta-100 rounded-full " /> */}
+                  <Auctions_dropdown classes="dark:hover:bg-jacarta-600 dropup hover:bg-jacarta-100 rounded-full " />
                 </div>
                 <div className="mt-2 text-sm">
                   <span className="dark:text-jacarta-200 text-jacarta-700 mr-1">
@@ -120,9 +122,9 @@ const CategoryItem = () => {
                 <div className="mt-8 flex items-center justify-between">
                   <button
                     className="text-accent font-display text-sm font-semibold"
-                    onClick={() => rentNFTs(nftId)}
+                    onClick={() => rentNFTs(item)}
                   >
-                 Rent
+                  {propId == "Creator" ? "Put on Rent" : ""}
                   </button>
                   {/* <Link href={`/item/${itemLink}`}>
                   <a className="group flex items-center">

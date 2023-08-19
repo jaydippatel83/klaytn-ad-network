@@ -12,7 +12,7 @@ import Image from "next/image";
 import auctions_category_data from "../../data/auctions_category_data";
 import Likes from "../likes";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase"; 
+import { db } from "../firebase";
 import { KlaytnContext } from "../../context/KlaytnContext";
 
 
@@ -22,7 +22,7 @@ const Auctions_categories = () => {
   const [loadMoreBtn, setLoadMoreBtn] = useState(true);
 
   const klaytnContext = useContext(KlaytnContext);
-  const { rentNFTs, rentLoading } = klaytnContext;
+  const { rentNFTs, rentLoading ,buyNft} = klaytnContext;
 
   const handleloadMore = () => {
 
@@ -32,8 +32,8 @@ const Auctions_categories = () => {
     const arry = [];
     const q = query(collection(db, "CreateNFTs"));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(async(fire) => {
-      const id = fire.id; 
+    querySnapshot.forEach(async (fire) => {
+      const id = fire.id;
       arry.push({ ...fire.data(), id });
     })
     setData(arry);
@@ -53,10 +53,9 @@ const Auctions_categories = () => {
             className="h-full w-full"
           />
         </picture>
-        <div className="container"> 
+        <div className="container">
           <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
             {data && data.map((item) => {
-              console.log(item, "item");
               const {
                 id,
                 Creator,
@@ -150,10 +149,10 @@ const Auctions_categories = () => {
                     <div className="mt-8 flex items-center justify-between">
                       <button
                         className="text-accent font-display text-sm font-semibold"
-                        onClick={() => rentNFTs(nftId)}
-                      
+                        onClick={() => rentNft(item)}
+
                       >
-                    Rent
+                        Rent NFT
                       </button>
 
                       <Likes

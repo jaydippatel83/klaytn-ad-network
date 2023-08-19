@@ -143,12 +143,10 @@ const Create = () => {
         Description: description,
         Creator: user && user,
         Photo: file,
-        Price: price, 
-        StartDate: dayjs(startDate).format("LL"),
-        EndDate: dayjs(endDate).format("LL"),
+        Price: price,  
         CreatedAt: new Date(),
         nftId: nftId, 
-        place: place
+        place: place 
       };
       await addDoc(collection(db, "CreateNFTs"), data);
       setUpdate(!update);
