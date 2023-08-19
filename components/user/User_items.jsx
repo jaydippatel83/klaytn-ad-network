@@ -84,13 +84,13 @@ const User_items = () => {
             <TabPanel>
               <div>
                 {/* <!-- Filter --> */}
-                <Trending_categories_items id="Sale" />
+                <Trending_categories_items id="rented" />
               </div>
             </TabPanel>
             <TabPanel>
               <div>
                 {/* <!-- Filter --> */}
-                <Trending_categories_items  id="Owned"/>
+                <Trending_categories_items  id="renter"/>
               </div>
             </TabPanel>
             <TabPanel>

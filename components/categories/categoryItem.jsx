@@ -12,7 +12,7 @@ import { db } from "../firebase";
 import { KlaytnContext } from "../../context/KlaytnContext";
 import { AuthContext } from "../../context/AuthConext";
 
-const CategoryItem = ({propId}) => {
+const CategoryItem = ({ propId }) => {
   const { sortedtrendingCategoryItemData } = useSelector(
     (state) => state.counter
   );
@@ -21,15 +21,27 @@ const CategoryItem = ({propId}) => {
   const { user } = authContext;
   const [nftData, setNftData] = useState([]);
   const klaytnContext = useContext(KlaytnContext);
-  const { rentNFTs, rentLoading,buyNft } = klaytnContext;
+  const { rentNFTs, rentLoading, buyNft } = klaytnContext;
 
   useEffect(() => {
     getNftData();
   }, []);
 
-  async function getNftData() { 
+  async function getNftData() {
+    let req;
+    let dd;
+    if (propId === 'rented') {
+      req = 'rented';
+      dd = false;
+    } else if (propId === 'renter') {
+      req = 'renter';
+      dd = user;
+    } else if(propId === "Creator") {
+      req = 'Creator';
+      dd = user;
+    }
     const arry = [];
-    const q = query(collection(db, "CreateNFTs"), where(propId ,"==", user)); 
+    const q = query(collection(db, "CreateNFTs"), where(req, "==", dd));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((fire) => {
       const id = fire.id;
@@ -41,8 +53,8 @@ const CategoryItem = ({propId}) => {
   return (
     <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
       {nftData &&
-        nftData.map((item) => { 
-          const { id, Photo, Nftname, Description, Creator, Price, nftId } = item; 
+        nftData.map((item) => {
+          const { id, Photo, Nftname, Description, Creator, Price, nftId } = item;
           return (
             <article key={id}>
               <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
@@ -111,10 +123,10 @@ const CategoryItem = ({propId}) => {
                 </div>
                 <div className="mt-2 text-sm">
                   <span className="dark:text-jacarta-200 text-jacarta-700 mr-1">
-                   Rent
+                    Rent
                   </span>
                   <span className="dark:text-jacarta-300 text-jacarta-500">
-                  {Price}
+                    {Price}
                   </span>
                 </div>
 
@@ -123,7 +135,7 @@ const CategoryItem = ({propId}) => {
                     className="text-accent font-display text-sm font-semibold"
                     onClick={() => rentNFTs(item)}
                   >
-                  {propId == "Creator" ? "Put on Rent" : ""}
+                    {propId == "Creator" ? "Put on Rent" : ""}
                   </button>
                   {/* <Link href={`/item/${itemLink}`}>
                   <a className="group flex items-center">
