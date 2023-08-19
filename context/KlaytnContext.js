@@ -11,7 +11,7 @@ export const KlaytnContext = createContext(undefined);
 export const KlaytnContextProvider = (props) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const web3 = new Web3()
+   
 
   const [nfts, setNfts] = useState([]);
   const [myNFTs, setMyNFTs] = useState([]);
