@@ -21,14 +21,13 @@ const CategoryItem = ({propId}) => {
   const { user } = authContext;
   const [nftData, setNftData] = useState([]);
   const klaytnContext = useContext(KlaytnContext);
-  const { rentNFTs, rentLoading } = klaytnContext;
+  const { rentNFTs, rentLoading,buyNft } = klaytnContext;
 
   useEffect(() => {
     getNftData();
   }, []);
 
-  async function getNftData() {
-    console.log(propId,user,"propId");
+  async function getNftData() { 
     const arry = [];
     const q = query(collection(db, "CreateNFTs"), where(propId ,"==", user)); 
     const querySnapshot = await getDocs(q);
@@ -42,8 +41,7 @@ const CategoryItem = ({propId}) => {
   return (
     <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
       {nftData &&
-        nftData.map((item) => {
-          console.log(item,"item");
+        nftData.map((item) => { 
           const { id, Photo, Nftname, Description, Creator, Price, nftId } = item; 
           return (
             <article key={id}>

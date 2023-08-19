@@ -44,7 +44,7 @@ const Explore = ({ propId }) => {
             {nftData &&
                 nftData.map((item) => {
                     const { id, Photo, Nftname, Description, Creator, Price, nftId } = item;
-                    console.log(item, "itttt");
+            
                     return (
                         <article key={id}>
                             <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">

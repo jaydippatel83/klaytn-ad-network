@@ -163,7 +163,7 @@ const Auctions_categories = () => {
                     <div className="mt-8 flex items-center justify-between">
                       <button
                         className="text-accent font-display text-sm font-semibold"
-                        onClick={() => rentNft(item)}
+                        onClick={() => buyNft(item)}
 
                       >
                         Rent NFT

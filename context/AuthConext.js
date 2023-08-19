@@ -18,8 +18,7 @@ export const AuthContextProvider = (props) => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const add = localStorage.getItem("address");
-            console.log(add, "add");
+            const add = localStorage.getItem("address"); 
             setAdd(add);
         }
     }, [])

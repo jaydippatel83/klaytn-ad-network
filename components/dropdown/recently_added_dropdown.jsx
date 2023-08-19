@@ -98,8 +98,7 @@ const Recently_added_dropdown = ({ data, dropdownFor }) => {
     });
   };
 
-  const handleCurrencyDropdown = () => {
-    console.log("first");
+  const handleCurrencyDropdown = () => { 
     if (currencyDropdown) {
       setCurrencyDropdown(false);
     } else {

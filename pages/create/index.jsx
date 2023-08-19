@@ -85,7 +85,7 @@ const Create = () => {
     const filename = file.name;
     const img = new File([file], file.name, { type: file.type });
     const nftstorage = new NFTStorage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEM5QjU3NmEwNTQxOWU2MDQ3QWQyZjQxQTQ5NjgzM2EzYmQxNzJmQ2IiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY5MjQyMjY4MTY5NywibmFtZSI6ImtsYXl0biJ9.31mz7ltTS1mLHK58rwL9mbOcyLsy2BQUf0ZtcRuPa2I' });
-    console.log(nftstorage,"nftstorage");
+    
     const res = await nftstorage.store({
       image: img,
       name: filename,

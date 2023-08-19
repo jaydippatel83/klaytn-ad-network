@@ -33,7 +33,7 @@ const Item = () => {
 		if (docSnap.exists) {
 			const data = docSnap.data();
 			setUserData(data);
-			console.log(data, "data");
+		 
 		}
 	}
 
