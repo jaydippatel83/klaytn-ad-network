@@ -64,7 +64,7 @@ export const KlaytnContextProvider = (props) => {
      const sdate = new Date(data.StartDate);
      const edate = new Date(data.EndDate);
      const stimestamp = sdate.getTime() / 1000;
-     const etimestamp = daedatete.getTime() / 1000; 
+     const etimestamp = edate.getTime() / 1000; 
 
     let rentTransaction = await rentFactoryContract.createContract(
       user,
