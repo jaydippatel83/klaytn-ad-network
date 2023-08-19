@@ -29,7 +29,8 @@ const Explore = ({ propId }) => {
 
     async function getNftData() {
         const arry = [];
-        const q = query(collection(db, "CreateNFTs"));
+        // const q = query(collection(db, "CreateNFTs"));
+        const q = query(collection(db, "CreateNFTs"), where('rented',"==",false));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((fire) => {
             const id = fire.id;

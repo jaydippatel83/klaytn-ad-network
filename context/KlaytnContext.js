@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
-import { collection, db, query, where } from "../components/firebase";
+import { collection, db, doc, getDocs, query, updateDoc, where } from "../components/firebase";
 import { AuthContext } from "./AuthConext";
 import axios from "axios";
 import { nftABI, nftMarketABI, nftaddress, nftmarketaddress, rentAbi, rentFactoryABI, rentFactoryAddress } from "../klaytn";
@@ -100,11 +100,11 @@ export const KlaytnContextProvider = (props) => {
         signer
       );
 
-      const price = nft.rentingAmount + 100000000000000000;
+      const price = nft.Price + 100000000000000000;
 
       const transaction = await contract.rentToken(
         currentAddress,
-        nft.rentingAmount,
+        nft.Price,
         {
           value: price.toString(),
         }
@@ -132,16 +132,20 @@ export const KlaytnContextProvider = (props) => {
 
 
   const rentNFTs = async (data) => {
+    console.log(data, "data");
     setRentLoading(true);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     let contract = new ethers.Contract(nftmarketaddress, nftMarketABI, signer);
     let tokencontract = new ethers.Contract(nftaddress, nftABI, signer);
     const transaction = await contract.createMarketItem(nftaddress, data.nftId);
+    console.log(transaction, "transaction");
     await transaction.wait();
     var rentingAmount;
     var rentCont;
+    console.log(data.Price,"data.Price");
     const listingPriceofRent = ethers.utils.formatEther(data.Price);
+    console.log(listingPriceofRent, "listingPriceofRent");
     let rentFactoryContract = new ethers.Contract(
       rentFactoryAddress,
       rentFactoryABI,
@@ -155,6 +159,8 @@ export const KlaytnContextProvider = (props) => {
     const edate = new Date(data.EndDate);
     const stimestamp = sdate.getTime() / 1000;
     const etimestamp = edate.getTime() / 1000;
+    console.log(rentingAmount, "rentingAmount");
+    console.log(etimestamp, stimestamp, "etimestamp");
 
     let rentTransaction = await rentFactoryContract.createContract(
       user,
@@ -167,10 +173,12 @@ export const KlaytnContextProvider = (props) => {
       etimestamp
     );
     let rentTx = await rentTransaction.wait();
+    console.log(rentTx, "rentTx");
     let rentEvent = rentTx.events[0];
     rentCont = rentEvent.args[1];
     const contractRent = new ethers.Contract(rentCont, rentAbi, signer);
     const txn = await tokencontract.approve(await contractRent.wrappedToken(), data.nftId);
+    console.log(txn, "txn");
     await txn.wait();
     setRentLoading(false);
 
@@ -184,6 +192,7 @@ export const KlaytnContextProvider = (props) => {
       await updateDoc(doc(db, "CreateNFTs", e.id), {
         rented: false,
         seller: user,
+        rentContract: rentCont
       });
     });
     toast.success("Nft Successfully listed on rent");

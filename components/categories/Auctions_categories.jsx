@@ -22,7 +22,7 @@ const Auctions_categories = () => {
   const [loadMoreBtn, setLoadMoreBtn] = useState(true);
 
   const klaytnContext = useContext(KlaytnContext);
-  const { rentNFTs, rentLoading ,buyNft} = klaytnContext;
+  const { rentNFTs, rentLoading, buyNft } = klaytnContext;
 
   const handleloadMore = () => {
 
@@ -30,7 +30,7 @@ const Auctions_categories = () => {
 
   const getExploreData = async () => {
     const arry = [];
-    const q = query(collection(db, "CreateNFTs"));
+    const q = query(collection(db, "CreateNFTs"), where('rented',"==",false));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (fire) => {
       const id = fire.id;
@@ -67,6 +67,13 @@ const Auctions_categories = () => {
                 Price,
                 nftId
               } = item;
+
+
+
+              const startDateStr = new Date(StartDate);
+              const endDateStr = new Date(EndDate); 
+              const timeDifferenceMs = endDateStr - startDateStr; 
+              const daysDifference = timeDifferenceMs / (1000 * 60 * 60 * 24); 
               return (
                 <article key={id}>
                   <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
@@ -144,6 +151,13 @@ const Auctions_categories = () => {
                       <span className="dark:text-jacarta-100 text-jacarta-700">
                         {Price}
                       </span>
+                    </div>
+
+                    <div className="mt-7 flex items-center justify-between">
+
+                      <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
+                       Rent for {daysDifference} Days
+                      </span> 
                     </div>
 
                     <div className="mt-8 flex items-center justify-between">

@@ -28,6 +28,7 @@ const CategoryItem = ({propId}) => {
   }, []);
 
   async function getNftData() {
+    console.log(propId,user,"propId");
     const arry = [];
     const q = query(collection(db, "CreateNFTs"), where(propId ,"==", user)); 
     const querySnapshot = await getDocs(q);
@@ -42,8 +43,8 @@ const CategoryItem = ({propId}) => {
     <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
       {nftData &&
         nftData.map((item) => {
-          const { id, Photo, Nftname, Description, Creator, Price, nftId } = item;
-console.log(item,"itttt");
+          console.log(item,"item");
+          const { id, Photo, Nftname, Description, Creator, Price, nftId } = item; 
           return (
             <article key={id}>
               <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
