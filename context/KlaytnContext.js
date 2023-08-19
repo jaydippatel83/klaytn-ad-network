@@ -4,7 +4,7 @@ import { AuthContext } from "./AuthConext";
 import axios from "axios";
 import { nftABI, nftMarketABI, nftaddress, nftmarketaddress, rentAbi, rentFactoryABI, rentFactoryAddress } from "../klaytn";
 import { ethers } from "ethers";
-import Web3 from "web3";
+ 
 
 export const KlaytnContext = createContext(undefined);
 
@@ -51,7 +51,7 @@ export const KlaytnContextProvider = (props) => {
    const transaction = await contract.createMarketItem(nftaddress, data.nftId);
     var rentingAmount;
     var rentCont;
-    const listingPriceofRent = web3.utils.toWei(data.Price, "ether");
+    const listingPriceofRent = ethers.utils.formatEther(data.Price);
     let rentFactoryContract = new ethers.Contract(
       rentFactoryAddress,
       rentFactoryABI,
