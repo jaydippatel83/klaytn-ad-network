@@ -81,9 +81,8 @@ export const KlaytnContextProvider = (props) => {
     rentCont = rentEvent.args[1];
     const contractRent = new ethers.Contract(rentCont, rentAbi, signer);
     await tokencontract.approve(await contractRent.wrappedToken(), tokenId);
-    await tokencontract.wait();
+    await tokencontract.wait(); 
 
-    
     setRentLoading(false);
   };
 
