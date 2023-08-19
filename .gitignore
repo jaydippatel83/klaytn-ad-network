@@ -18,9 +18,7 @@
 
 # misc
 .DS_Store
-*.pem
-next.config.js
-/next.config.js
+*.pem 
 .env
 # debug
 npm-debug.log*
